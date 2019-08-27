@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <%- include('component/head.html', { pageMeta: siteMeta }) %>
+  <style>
+    :root {
+      font-size: 18px;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('component/navbar.html', { siteMeta }) %>
+  <div class="container">
+    <% if (siteMeta.cover) { %>
+    <div class="page-cover">
+      <img src="<%= siteMeta.cover %>">
+    </div>
+    <% } %>
+    <div class="page-title <% if (!siteMeta.cover) { %>page-title--nocover<% } %>">
+      <div class="page-icon"><%- siteMeta.iconHTML %></div>
+      <h1><%= siteMeta.title %></h1>
+    </div>
+    <% if (siteMeta.description) { %>
+    <div>
+      <span class="quote--big">&ldquo;</span>
+      <%- siteMeta.descriptionHTML %>
+      <span class="quote--big">&bdquo;</span>
+    </div>
+    <% } %>
+    <div class="fill-h">
+      <% siteMeta.pages.forEach(page => { %>
+      <% if (page.publish && page.inList) { %>
+      <div class="post-brief">
+        <div class="block">
+          <h3>
+            <%- page.iconHTML %>
+            <a href="<%= page.url %>" class="post-brief--title">
+              <%= page.title %>
+            </a>
+          </h3>
+        </div>
+        <div class="block block--text">
+          <%- page.descriptionHTML %>
+        </div>
+        <div class="block block--text meta">
+          <% if (page.date) { %>
+          <span class="meta--date">Posted on <%= page.dateString %></span>
+          <% } %>
+          <% page.tags.forEach(tag => { %>
+          <span class="meta--tag <%= tag.color %>"><%= tag.value %></span>
+          <% }) %>
+        </div>
+      </div>
+      <% } %>
+      <% }) %>
+    </div>
+    <%- include('component/footer.html', { siteMeta }) %>
+  </div>
+</body>
+
+</html>

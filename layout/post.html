@@ -1,0 +1,39 @@
+<html>
+
+<head>
+  <%- include('component/head.html', { pageMeta: post }) %>
+  <style>
+    :root {
+      font-size: 16px;
+    }
+  </style>
+</head>
+
+<body>
+  <%- include('component/navbar.html', { siteMeta }) %>
+  <div class="container">
+    <div id="post-body" class="fill-h">
+      <% if (post.cover) { %>
+      <div class="page-cover">
+        <img src="<%= post.cover %>">
+      </div>
+      <% } %>
+      <div id="<%= post.id %>" class="page-title <% if (!post.cover) { %>page-title--nocover<% } %>">
+        <div class="page-icon"><%- post.iconHTML %></div>
+        <h1><%= post.title %></h1>
+        <div class="block block--text meta">
+          <% if (post.date) { %>
+          <span class="meta--date">Posted on <%= post.dateString %></span>
+          <% } %>
+          <% post.tags.forEach(tag => { %>
+          <span class="meta--tag <%= tag.color %>"><%= tag.value %></span>
+          <% }) %>
+        </div>
+      </div>
+      <%- post.contentHTML %>
+    </div>
+    <%- include('component/footer.html', { siteMeta }) %>
+  </div>
+</body>
+
+</html>
